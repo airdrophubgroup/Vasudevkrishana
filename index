@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirdropHubGroup - Crypto Airdrops Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #1da1f2;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .airdrop-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .airdrop-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1da1f2;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .task-item input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+        .status {
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .ready { background-color: #d4edda; color: #155724; }
+        .pending { background-color: #fff3cd; color: #856404; }
+        .join-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .join-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 AirdropHubGroup</h1>
+        <p>Your go-to hub for free crypto airdrops & community farming</p>
+    </header>
+    <div class="container">
+        <h2>Featured Airdrops (October 2025)</h2>
+        <div id="airdrops-list"></div>
+    </div>
+
+    <script>
+        const airdrops = [
+            {
+                title: "Solana Layer 2 Blast",
+                description: "Earn points by bridging assets and joining Telegram.",
+                tasks: ["Join Telegram Group", "Follow on X (Twitter)", "Complete On-Chain Swap"],
+                groupLink: "https://t.me/airdrops_io"  // Example link
+            },
+            {
+                title: "Ethereum Retro Drop - Arbitrum",
+                description: "Retroactive rewards for early users. Verify wallet activity.",
+                tasks: ["Connect Wallet", "Join Discord", "Share Referral"],
+                groupLink: "https://discord.com/invite/3pYcjxR"  // Example link
+            },
+            {
+                title: "Base Chain Airdrop",
+                description: "Farm tokens via social tasks and staking.",
+                tasks: ["Sign Up on Web App", "Engage on Posts", "Invite Friends"],
+                groupLink: "https://t.me/airdrops_io"  // Example link
+            }
+        ];
+
+        function renderAirdrops() {
+            const list = document.getElementById('airdrops-list');
+            airdrops.forEach((airdrop, index) => {
+                const card = document.createElement('div');
+                card.className = 'airdrop-card';
+                card.innerHTML = `
+                    <div class="airdrop-title">${airdrop.title}</div>
+                    <p>${airdrop.description}</p>
+                    <ul class="task-list">
+                        ${airdrop.tasks.map(task => `<li class="task-item"><input type="checkbox" onchange="updateStatus(${index})"> ${task}</li>`).join('')}
+                    </ul>
+                    <div id="status-${index}" class="status pending">Status: Pending</div>
+                    <button class="join-btn" onclick="joinGroup('${airdrop.groupLink}')">Join Group & Start Farming</button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function updateStatus(index) {
+            const checkboxes = document.querySelectorAll(`#airdrops-list .airdrop-card:nth-child(${index + 1}) input[type="checkbox"]`);
+            const statusEl = document.getElementById(`status-${index}`);
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            if (completed === total) {
+                statusEl.textContent = 'Status: Claim Ready! 🎉';
+                statusEl.className = 'status ready';
+            } else {
+                statusEl.textContent = `Status: ${completed}/${total} Tasks Complete`;
+                statusEl.className = 'status pending';
+            }
+        }
+
+        function joinGroup(link) {
+            window.open(link, '_blank');
+        }
+
+        renderAirdrops();
+    </script>
+</body>
+</html>
